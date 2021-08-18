@@ -1,20 +1,23 @@
 import {loadJS} from './util'
-import {polvoServiceClient} from "./polvoClient";
-import {GetWeightedVersionRequest} from "@aiocean/polvojs/aiocean/polvo/v1/polvo_service_pb";
+import {
+  GetVersionRequest
+} from "@aiocean/polvojs/aiocean/polvo/v1/polvo_service_pb"
+import {PolvoServicePromiseClient} from "@aiocean/polvojs/aiocean/polvo/v1/polvo_service_grpc_web_pb"
 
-export interface PolvoClientOptions {}
 
 export class PolvoClient {
-  constructor(address: string, options: PolvoClientOptions = {}) {
+  private polvoServiceClient: PolvoServicePromiseClient;
 
+  constructor(address: string) {
+    this.polvoServiceClient = new PolvoServicePromiseClient(address)
   }
 
-  async getPackageEndpoint(packageName: string): Promise<string> {
-    let request: GetWeightedVersionRequest = new GetWeightedVersionRequest()
-    request.setPackageOrn('erasdf')
-    let response = await polvoServiceClient.getWeightedVersion(request)
-    console.log(response.getVersion()?.getEntryPointUrl())
-    return ''
+  async getPackageEndpoint(packageName: string, version: string): Promise<string> {
+    let request: GetVersionRequest = new GetVersionRequest()
+    request.setOrn('packages/'+ packageName + '/versions/' + version)
+
+    let response = await this.polvoServiceClient.getVersion(request)
+    return response.getVersion()?.getManifestUrl() || ''
   }
 
   async loadPackage (packageName: string, endpointUrl: string): Promise<HTMLScriptElement> {
@@ -38,10 +41,17 @@ export class PolvoClient {
   }
 
   async useComponent <T>(componentPath: string): Promise<T> {
-    const [packageName, componentName] = componentPath.split('/')
+    const regex = /^([^\/]+)\/([^\/]+)@([^\/]+)/gm
+    const matches = regex.exec(componentPath)
+    if (matches === null || matches.length !== 4) {
+      return Promise.reject('component path is invalid')
+    }
+
+    const [,packageName, componentName, versionName] = matches
 
     if (!Object.prototype.hasOwnProperty.call(window, packageName)) {
-      await this.loadPackage(packageName, '')
+      const endpoint = await this.getPackageEndpoint(packageName, versionName)
+      await this.loadPackage(packageName, endpoint)
     }
 
     // @ts-ignore
@@ -51,6 +61,6 @@ export class PolvoClient {
   }
 }
 
-export function createPolvoClient(address: string, options?: PolvoClientOptions) {
-  return new PolvoClient(address, options)
+export function createPolvoClient(address: string) {
+  return new PolvoClient(address)
 }

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@aiocean/polvojs@^1.0.3":
-  version "1.0.3"
-  resolved "https://asia-npm.pkg.dev/aio-shopify-services/polvojs/@aiocean/polvojs/-/@aiocean/polvojs-1.0.3.tgz#35b90b4acb50154526d42cbd8b371d9725408158"
-  integrity sha512-D2ZO0JZ580rwQh0ZtSIuGPHuI3Xv+SkfANlkgd1pN7DaqsOnSTnFpzcLoLNrwrWwfMg7sBoBp2ojrOZEPdNyzg==
+"@aiocean/polvojs@^1.0.11":
+  version "1.0.11"
+  resolved "https://asia-npm.pkg.dev/aio-shopify-services/polvo/@aiocean/polvojs/-/@aiocean/polvojs-1.0.11.tgz#8c4099e5b7e051f5a233ecc13505ad6601f67920"
+  integrity sha512-bq3KagZlsVebACvliJMUtB18Bcb/J33GS08mO2e6FfWpPjJ55INS0lPgHsBrRyjZ8cUGwN/kMwYgGKksg1jNbw==
   dependencies:
     google-protobuf "^3.17.0-rc.1"
     grpc-web "^1.2.1"

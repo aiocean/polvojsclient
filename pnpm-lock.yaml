@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@aiocean/polvojs': ^v1.1.22
   '@egoist/prettier-config': ^0.1.0
   '@sucrase/jest-plugin': ^2.0.0
   '@types/jest': ^26.0.20
@@ -8,6 +9,9 @@ specifiers:
   prettier: ^2.2.1
   tsup: ^4.8.4
   typescript: ^4.2.3
+
+dependencies:
+  '@aiocean/polvojs': 1.1.22
 
 devDependencies:
   '@egoist/prettier-config': 0.1.0
@@ -19,6 +23,13 @@ devDependencies:
   typescript: 4.2.3
 
 packages:
+
+  /@aiocean/polvojs/1.1.22:
+    resolution: {integrity: sha512-GGfb/C+GQWySCBWwh/Me6ZlwiQ0dkt6ziyhTtAFUgHA2NRKlVhs/gTwdzMHvZBjYVZlNkPuvcGg/YJ7EOPRNVg==}
+    dependencies:
+      google-protobuf: 3.17.3
+      grpc-web: 1.2.1
+    dev: false
 
   /@babel/code-frame/7.12.13:
     resolution: {integrity: sha512-HV1Cm0Q3ZrpCR93tkWOYiuYIgLxZXZFVG2VgK+MBWjUqZTundupbfx2aXarXuw5Ko5aMcjtJgbSs4vUGBS5v6g==}
@@ -1694,6 +1705,10 @@ packages:
       slash: 3.0.0
     dev: true
 
+  /google-protobuf/3.17.3:
+    resolution: {integrity: sha512-OVPzcSWIAJ+d5yiHyeaLrdufQtrvaBrF4JQg+z8ynTkbO3uFcujqXszTumqg1cGsAsjkWnI+M5B1xZ19yR4Wyg==}
+    dev: false
+
   /graceful-fs/4.2.6:
     resolution: {integrity: sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==}
     dev: true
@@ -1702,6 +1717,10 @@ packages:
     resolution: {integrity: sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=}
     dev: true
     optional: true
+
+  /grpc-web/1.2.1:
+    resolution: {integrity: sha512-ibBaJPzfMVuLPgaST9w0kZl60s+SnkPBQp6QKdpEr85tpc1gXW2QDqSne9xiyiym0logDfdUSm4aX5h9YBA2mw==}
+    dev: false
 
   /har-schema/2.0.0:
     resolution: {integrity: sha1-qUwiJOvKwEeCoNkDVSHyRzW37JI=}
