@@ -1,23 +1,10 @@
 import {loadJS} from './util'
-import {
-  GetVersionRequest
-} from "@aiocean/polvojs/aiocean/polvo/v1/polvo_service_pb"
-import {PolvoServicePromiseClient} from "@aiocean/polvojs/aiocean/polvo/v1/polvo_service_grpc_web_pb"
-
 
 export class PolvoClient {
-  private polvoServiceClient: PolvoServicePromiseClient;
+  private readonly polvoProxyAddress: string;
 
   constructor(address: string) {
-    this.polvoServiceClient = new PolvoServicePromiseClient(address)
-  }
-
-  async getPackageEndpoint(packageName: string, version: string): Promise<string> {
-    let request: GetVersionRequest = new GetVersionRequest()
-    request.setOrn('packages/'+ packageName + '/versions/' + version)
-
-    let response = await this.polvoServiceClient.getVersion(request)
-    return response.getVersion()?.getManifestUrl() || ''
+    this.polvoProxyAddress = address
   }
 
   async loadPackage (packageName: string, endpointUrl: string): Promise<HTMLScriptElement> {
@@ -50,7 +37,7 @@ export class PolvoClient {
     const [,packageName, componentName, versionName] = matches
 
     if (!Object.prototype.hasOwnProperty.call(window, packageName)) {
-      const endpoint = await this.getPackageEndpoint(packageName, versionName)
+      const endpoint = this.polvoProxyAddress + '/packages/' + packageName + '/versions/' + versionName
       await this.loadPackage(packageName, endpoint)
     }
 
@@ -59,8 +46,4 @@ export class PolvoClient {
     const factory = await container.get('./' + componentName)
     return factory()
   }
-}
-
-export function createPolvoClient(address: string) {
-  return new PolvoClient(address)
 }
