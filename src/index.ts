@@ -28,20 +28,16 @@ export class PolvoClient {
   }
 
   async useComponent <T>(componentPath: string): Promise<T> {
-    const regex = /^([^\/]+)\/([^\/]+)@([^\/]+)/gm
+    const regex = /^([^\/]+)\/([^\/]+)/gm
     const matches = regex.exec(componentPath)
-    if (matches === null || matches.length < 3) {
+    if (matches === null || matches.length !== 3) {
       return Promise.reject('component path is invalid')
     }
 
-    let [,packageName, componentName, versionName] = matches
-
-    if (versionName === '') {
-      versionName = 'any'
-    }
+    const [,packageName, componentName] = matches
 
     if (!Object.prototype.hasOwnProperty.call(window, packageName)) {
-      const endpoint = this.polvoProxyAddress + '/packages/' + packageName + '/versions/' + versionName
+      const endpoint = this.polvoProxyAddress + '/packages/' + packageName + '/versions/any'
       await this.loadPackage(packageName, endpoint)
     }
 
