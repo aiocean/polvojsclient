@@ -30,7 +30,7 @@ export class PolvoClient {
   async useComponent <T>(componentPath: string): Promise<T> {
     const regex = /^([^\/]+)\/([^\/]+)@([^\/]+)/gm
     const matches = regex.exec(componentPath)
-    if (matches === null || matches.length !== 4) {
+    if (matches === null || matches.length < 3) {
       return Promise.reject('component path is invalid')
     }
 
