@@ -34,7 +34,11 @@ export class PolvoClient {
       return Promise.reject('component path is invalid')
     }
 
-    const [,packageName, componentName, versionName] = matches
+    let [,packageName, componentName, versionName] = matches
+
+    if (versionName === '') {
+      versionName = 'any'
+    }
 
     if (!Object.prototype.hasOwnProperty.call(window, packageName)) {
       const endpoint = this.polvoProxyAddress + '/packages/' + packageName + '/versions/' + versionName
